@@ -1,4 +1,6 @@
 import json
+import csv
+import re
 
 def openFile(path, file):
     type = file.split('.')[-1]
@@ -16,3 +18,19 @@ def openFile(path, file):
     return v
 
 
+def split_transactions(t):
+    return re.split(r',(?=")', t)
+
+
+
+def parse_and_write_transactions(t, write_path='.'):
+    '''
+    t: result of mintapi.Mint().get_transactions_csv()
+    write_path: location you want to store the temporary transactions csv
+    
+    '''
+    transactions = str(t, 'utf-8').split("\n")
+    with open('{}/.temp_transactions.csv'.format(write_path), 'w') as f:
+        writer = csv.writer(f)
+        for row in transactions:
+            writer.writerow(split_transactions(row))
