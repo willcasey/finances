@@ -51,3 +51,32 @@ def replace_nans(t):
 def create_sudo_id_field(cols):
     val = re.sub(r'\W+', '', (''.join([str(i) for i in cols])).lower())
     return val
+
+
+
+def update_col_format(spreadsheet, sheet):
+    requests = [{
+        "repeatCell": {
+            "range": {
+                "startColumnIndex": 0,
+                "endColumnIndex": 1,
+                "sheetId": sheet._properties['sheetId']
+            },
+        "cell": {
+             "userEnteredFormat": {
+                "numberFormat": {
+                "type": "DATE",
+                "pattern": "mm/dd/yyy"
+                    }
+                }
+            },
+            "fields": "userEnteredFormat.numberFormat"
+        }
+    }]
+    body = {
+        'requests': requests
+    }
+    res = spreadsheet.batch_update(body)
+
+
+

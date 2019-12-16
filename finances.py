@@ -88,6 +88,7 @@ def main():
     #pp.pprint(mintdf)
     #pp.pprint(sheetsdf)
     insertNewData(mintdf, sheetsdf, len(sheetsdf) + 2)
+    update_col_format(SPREADSHEET, SHEET)
 
 
 
